@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "iir.h"
+#include "autotests.h"
 
 int main(int argc, char** argv) {
-  printf("Hello World\n");
+  testBlocIIR();
   return 0;
 }
 

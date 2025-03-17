@@ -1,5 +1,6 @@
 #ifndef DEFINE_H
 #define DEFINE_H
+#define alpha 0.992
 
 #include <unistd.h>
 #include <stdio.h>
