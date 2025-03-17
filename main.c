@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
-  printf("Hello Yanis\n");
+  printf("Hello World\n");
   return 0;
 }
 
