@@ -23,7 +23,6 @@ void affichage(oxy myOxy){
 		fclose(data);
 		remove(".verrouData");
 	}
-	else {
-	}
+	else {}
 }
 
