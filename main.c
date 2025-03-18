@@ -4,11 +4,10 @@
 #include "fir.h"
 #include "iir.h"
 #include "tests/autotests.h"
+#include "mesure.h"
 
 int main (int argc, char** argv) {
-  testBlocFIR();
-  firTest("../log/log1/log1.dat");
-  testBlocIIR();
+  testBlocMesure();
   return 0;
 }
 

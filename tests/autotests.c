@@ -161,7 +161,7 @@ void testBlocMesure(){
 	oxy myOxyRef;
 	float mark[2]={0,0};
 	int coeff[2]={1,1};
-	char* filename = "log1_iir.dat";
+	char* filename = "../log/log1/log1_iir.dat";
 	FILE* myFile_pf=initFichier(filename);
 	oxy myOxy = mesureTest(filename);
 	myOxyRef.spo2=98;
@@ -178,8 +178,8 @@ void testBlocMesure(){
 	}
 
 	printAutoTestsResults("Mesure",mark,coeff,2);
-	/*printf("spo2=%d [ref=%d]\n",myOxy.spo2,myOxyRef.spo2);
-	printf("pouls=%d [ref=%d]\n",myOxy.pouls,myOxyRef.pouls);*/
+	printf("spo2=%d [ref=%d]\n",myOxy.spo2,myOxyRef.spo2);
+	printf("pouls=%d [ref=%d]\n",myOxy.pouls,myOxyRef.pouls);
 	
 
 }
