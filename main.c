@@ -6,9 +6,7 @@
 #include "tests/autotests.h"
 
 int main (int argc, char** argv) {
-  testBlocFIR();
-  firTest("../log/log1/log1.dat");
-  testBlocIIR();
+  testBlocAffichage();
   return 0;
 }
 
