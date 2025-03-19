@@ -4,14 +4,31 @@
 #include "lecture.h"
 
 void lecture(){
+    FT_STATUS ftStatus;
+    DWORD numDevs;
+    char *BufPtrs[3];  
+    char Buffer1[64];  
+    char Buffer2[64];  
+    BufPtrs[0] = Buffer1; 
+    BufPtrs[1] = Buffer2; 
+    BufPtrs[2] = NULL; 
+    ftStatus = FT_ListDevices(BufPtrs,&numDevs,FT_LIST_ALL|FT_OPEN_BY_SERIAL_NUMBER);  
+    if (ftStatus == FT_OK) {
+        printf("Device 0: %s\n",Buffer1);
+    }
+
+    ftStatus = FT_SetVIDPID(0403,6015);
+    if (ftStatus == FT_OK) {
+        printf("VID and PID set\n");
+    }
+
     FT_HANDLE ftHandle; 
-    FT_STATUS ftStatus; 
     DWORD EventDWord;
     DWORD RxBytes;
     DWORD TxBytes;  
     DWORD BytesReceived; 
     unsigned char RxBuffer[256];
-    ftStatus = FT_Open(0, &ftHandle);
+    ftStatus = FT_OpenEx((PVOID) Buffer1,FT_OPEN_BY_SERIAL_NUMBER,&ftHandle);
     printf("open lecture\n");
     if(ftStatus != FT_OK) { 
         // FT_Open failed
