@@ -9,6 +9,7 @@
 
 int main (int argc, char** argv) {
     lecture();
+    //testBlocAffichage();
     //testBlocMesure();
     return 0;
 }
