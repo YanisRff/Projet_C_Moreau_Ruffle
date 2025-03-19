@@ -5,9 +5,10 @@
 #include "iir.h"
 #include "tests/autotests.h"
 #include "mesure.h"
+#include "lecture.h"
 
 int main (int argc, char** argv) {
-  testBlocMesure();
-  return 0;
+    lecture();
+    //testBlocMesure();
+    return 0;
 }
-
