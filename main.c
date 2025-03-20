@@ -7,8 +7,7 @@
 #include "mesure.h"
 
 int main (int argc, char** argv) {
-  testBlocAffichage();
-  testBlocMesure();
+  testBlocFIR();
 
   return 0;
 }
