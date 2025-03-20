@@ -2,6 +2,17 @@
 #include "fichiers.h"
 #include <stdbool.h>
 
+int table_de_correspondance(float rsir){
+    if (rsir <= 1.0){
+        float result = -25.0 * rsir + 110;
+        return (int)result;
+    }
+    else{
+        float result = -(425.0/12.0) * rsir + 120.4;
+        return result;
+    }
+}
+
 BOOL mesure(absorp myAbsorp,oxy* myOxy, int* etat, float* max_acr, float* min_acr, float*max_acir, float* min_acir, float* old_acr, float* time, float* periode){
     if(old_acr == NULL){
         *old_acr = myAbsorp.acr;
