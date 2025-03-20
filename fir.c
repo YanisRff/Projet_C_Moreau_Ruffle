@@ -55,18 +55,42 @@ float FIR_TAPS[51]={
     1.4774946e-019
 };
 
+int etat = 0;
+int am_count = 0;
+int front;
+absorp absorp_memory[51] = {0};
+
+absorp fir(absorp donnes) {
+	absorp result={0};
+	absorp_memory[am_count%51] = donnes;
+	am_count++;
+	front = am_count%51;
+	for(int i = 0; i<51; i++){
+		result.acr += absorp_memory[(50+front-i)%51].acr * FIR_TAPS[i];
+		result.dcr = absorp_memory[50].dcr;
+		result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
+		result.dcir = absorp_memory[50].dcir;
+	}
+	return result;
+}
+
+
+
+
+
 
 absorp firTest(char* filename){
 	absorp	myAbsorp;
-	absorp absorp_memory[51] = {0};
-	int etat = 0;
-	int am_count = 0;
+	//absorp absorp_memory[51] = {0};
+	//int etat = 0;
+	//int am_count = 0;
 	FILE* file = initFichier(filename);
 	absorp result;
-	int front;
+	//int front;
 	myAbsorp = lireFichier(file, &etat);
 	while(etat != EOF){
-		result.acr = 0;
+		result = fir(myAbsorp);
+		/*result.acr = 0;
 		result.dcr = 0;
 		result.acir = 0;
 		result.dcir = 0;
@@ -79,7 +103,7 @@ absorp firTest(char* filename){
                 	result.dcr = absorp_memory[50].dcr;
                 	result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
                 	result.dcir = absorp_memory[50].dcir;
-        	}
+        	}*/
 		myAbsorp = lireFichier(file, &etat);
 	}
 	finFichier(file);
