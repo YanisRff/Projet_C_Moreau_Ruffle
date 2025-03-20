@@ -8,8 +8,25 @@
 #include "lecture.h"
 
 int main (int argc, char** argv) {
-    lecture();
-    //testBlocAffichage();
-    //testBlocMesure();
+    //Struct callbacks
+    absorp myAbsorp;
+    oxy myOxy;
+
+    //Variables callbacks
+    float time = 0.;
+    float periode = 0.;
+    int etat = 0;
+    float max_acr;
+    float min_acr;
+    float max_acir;
+    float min_acir;
+    float old_acr;
+
+    //main
+    while(1){
+        lecture(&time);
+
+    }
+
     return 0;
 }
