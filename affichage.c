@@ -18,6 +18,8 @@ void affichage(oxy myOxy){
 	if (verrou() == 0) {
 		fopen(".verrouData","w+");
 		FILE* data = fopen("data.txt","w");
+        printf("SPO2 : %d\n", myOxy.spo2);
+        printf("Pouls : %d\n", myOxy.pouls);
 		fprintf(data, "%d\n", myOxy.spo2);
 		fprintf(data, "%d\n", myOxy.pouls);
 		fclose(data);

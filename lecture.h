@@ -2,4 +2,4 @@
 #include "ftd2xx.h"
 #include <time.h>
 
-absorp lecture(double *time);
+absorp lecture(float *time);

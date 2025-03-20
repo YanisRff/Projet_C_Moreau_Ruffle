@@ -13,12 +13,12 @@ absorp lecture(float *time){
     BufPtrs[2] = NULL; 
     ftStatus = FT_ListDevices(BufPtrs,&numDevs,FT_LIST_ALL|FT_OPEN_BY_SERIAL_NUMBER);  
     if (ftStatus == FT_OK) {
-        printf("Device 0: %s\n",Buffer1);
+        //printf("Device 0: %s\n",Buffer1);
     }
 
     ftStatus = FT_SetVIDPID(0403,6015);
     if (ftStatus == FT_OK) {
-        printf("VID and PID set\n");
+        //printf("VID and PID set\n");
     }
 
     FT_HANDLE ftHandle; 
@@ -29,13 +29,17 @@ absorp lecture(float *time){
     unsigned char RxBuffer[256];
     ftStatus = FT_OpenEx((PVOID) Buffer1,FT_OPEN_BY_SERIAL_NUMBER,&ftHandle);
     //ftStatus = FT_Open(0,&ftHandle);
-    printf("open lecture\n");
+    //printf("open lecture\n");
     if(ftStatus != FT_OK) { 
         // FT_Open failed
         printf("open failed\n");
     }
-    ftStatus = FT_SetBaudRate(ftHandle, FT_BAUD_460800);
-    ftStatus = FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE);
+    ftStatus |= FT_SetBaudRate(ftHandle, FT_BAUD_460800);
+    ftStatus |= FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE);
+    if(ftStatus != FT_OK) { 
+        // FT_SetBaudRate or FT_SetDataCharacteristics failed
+        printf("set failed\n");
+    }
     int i = 0; 
     int etat = 0;
     int count = 0;
@@ -46,7 +50,7 @@ absorp lecture(float *time){
         ftStatus = FT_Read(ftHandle,RxBuffer,RxBytes,&BytesReceived); 
         if (ftStatus == FT_OK) { 
             // FT_Read OK
-            printf("read ok\n");
+            //printf("read ok\n");
             for(int j = 0; j < sizeof(RxBuffer); j++){
                 if (RxBuffer[j] == '\n' && etat == 0){
                     etat = 1;
@@ -88,15 +92,17 @@ absorp lecture(float *time){
         return str;
     }
 
-    float acr = atoi(char_to_str(info[1]))*1000 + atoi(char_to_str(info[2]))*100 + atoi(char_to_str(info[3]))*10 + atoi(char_to_str(info[4]));
-    float dcr = atoi(char_to_str(info[6]))*1000 + atoi(char_to_str(info[7]))*100 + atoi(char_to_str(info[8]))*10 + atoi(char_to_str(info[9]));
-    float acir = atoi(char_to_str(info[11]))*1000 + atoi(char_to_str(info[12]))*100 + atoi(char_to_str(info[13]))*10 + atoi(char_to_str(info[14]));
-    float dcir = atoi(char_to_str(info[16]))*1000 + atoi(char_to_str(info[17]))*100 + atoi(char_to_str(info[18]))*10 + atoi(char_to_str(info[19]));
-
+    float acr = atoi(char_to_str(info[1]))*1000 + atoi(char_to_str(info[2]))*100 + atoi(char_to_str(info[3]))*10 + atoi(char_to_str(info[4])) - 2000;
+    float dcr = atoi(char_to_str(info[6]))*1000 + atoi(char_to_str(info[7]))*100 + atoi(char_to_str(info[8]))*10 + atoi(char_to_str(info[9])) - 2000;
+    float acir = atoi(char_to_str(info[11]))*1000 + atoi(char_to_str(info[12]))*100 + atoi(char_to_str(info[13]))*10 + atoi(char_to_str(info[14]))-2000;
+    float dcir = atoi(char_to_str(info[16]))*1000 + atoi(char_to_str(info[17]))*100 + atoi(char_to_str(info[18]))*10 + atoi(char_to_str(info[19])) - 2000;
+    
+    printf("lecture\n");
     printf("acr : %f\n", acr);
     printf("dcr : %f\n", dcr);
     printf("acir : %f\n", acir);
     printf("dcir : %f\n", dcir);
+    printf("\n");
 
     absorp myAbsorp;
     myAbsorp.acr = acr;
@@ -106,9 +112,9 @@ absorp lecture(float *time){
 
     end = clock();
     cpu_time_used = ((float) (end - start)) / CLOCKS_PER_SEC;
-    printf("temps : %f\n", cpu_time_used);
+    //printf("temps : %f\n", cpu_time_used);
     *time = cpu_time_used;
-    printf("temps : %f\n", *time);
+    //printf("temps : %f\n", *time);
 
     return myAbsorp;
 

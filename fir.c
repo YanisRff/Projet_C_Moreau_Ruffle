@@ -55,22 +55,31 @@ float FIR_TAPS[51]={
     1.4774946e-019
 };
 
-int etat = 0;
-int am_count = 0;
-int front;
-absorp absorp_memory[51] = {0};
 
-absorp fir(absorp donnes) {
-	absorp result={0};
-	absorp_memory[am_count%51] = donnes;
-	am_count++;
-	front = am_count%51;
+absorp fir(absorp donnes, absorp* absorp_memory, int* am_count, int* front){
+	absorp result = {0};
+	absorp_memory[*am_count%51] = donnes;
+	*am_count = *am_count + 1;
+	*front = (*am_count)%51;
 	for(int i = 0; i<51; i++){
-		result.acr += absorp_memory[(50+front-i)%51].acr * FIR_TAPS[i];
-		result.dcr = absorp_memory[50].dcr;
-		result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
-		result.dcir = absorp_memory[50].dcir;
+		result.acr += absorp_memory[(50+(*front)-i)%51].acr * FIR_TAPS[i];
+        printf("acr : %f\n", result.acr);
+        printf("absorp_memory : %f\n", absorp_memory[(50+(*front)-i)%51].acr);
+        printf("FIR_TAPS : %f\n", FIR_TAPS[i]);
+		result.dcr = donnes.dcr;
+		result.acir += absorp_memory[(50+(*front)-i)%51].acir * FIR_TAPS[i];
+		result.dcir = donnes.dcir;
 	}
+    
+    printf("fiir\n");
+    printf("acr : %f\n", result.acr);
+    printf("dcr : %f\n", result.dcr);
+    printf("acir : %f\n", result.acir);
+    printf("dcir : %f\n", result.dcir);
+    printf("am_count : %d\n", *am_count);
+    printf("front : %d\n", *front);
+    printf("\n");
+
 	return result;
 }
 
@@ -78,7 +87,7 @@ absorp fir(absorp donnes) {
 
 
 
-
+/*
 absorp firTest(char* filename){
 	absorp	myAbsorp;
 	//absorp absorp_memory[51] = {0};
@@ -90,7 +99,7 @@ absorp firTest(char* filename){
 	myAbsorp = lireFichier(file, &etat);
 	while(etat != EOF){
 		result = fir(myAbsorp);
-		/*result.acr = 0;
+		result.acr = 0;
 		result.dcr = 0;
 		result.acir = 0;
 		result.dcir = 0;
@@ -103,14 +112,14 @@ absorp firTest(char* filename){
                 	result.dcr = absorp_memory[50].dcr;
                 	result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
                 	result.dcir = absorp_memory[50].dcir;
-        	}*/
+        	}
 		myAbsorp = lireFichier(file, &etat);
 	}
 	finFichier(file);
 	return result;
 
 }
-
+*/
 
 
 
