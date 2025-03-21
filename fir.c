@@ -56,18 +56,14 @@ float FIR_TAPS[51]={
 };
 
 
-absorp fir(absorp donnes, absorp* absorp_memory, int* am_count, int* front){
+absorp fir(absorp donnes, absorp* absorp_memory, int* am_count){
 	absorp result = {0};
 	absorp_memory[*am_count%51] = donnes;
 	*am_count = *am_count + 1;
-	*front = (*am_count)%51;
 	for(int i = 0; i<51; i++){
-		result.acr += absorp_memory[(50+(*front)-i)%51].acr * FIR_TAPS[i];
-        printf("acr : %f\n", result.acr);
-        printf("absorp_memory : %f\n", absorp_memory[(50+(*front)-i)%51].acr);
-        printf("FIR_TAPS : %f\n", FIR_TAPS[i]);
+		result.acr += absorp_memory[(51+(*am_count)-i)%51].acr * FIR_TAPS[i];
 		result.dcr = donnes.dcr;
-		result.acir += absorp_memory[(50+(*front)-i)%51].acir * FIR_TAPS[i];
+		result.acir += absorp_memory[(51+(*am_count)-i)%51].acir * FIR_TAPS[i];
 		result.dcir = donnes.dcir;
 	}
     
@@ -77,7 +73,6 @@ absorp fir(absorp donnes, absorp* absorp_memory, int* am_count, int* front){
     printf("acir : %f\n", result.acir);
     printf("dcir : %f\n", result.dcir);
     printf("am_count : %d\n", *am_count);
-    printf("front : %d\n", *front);
     printf("\n");
 
 	return result;

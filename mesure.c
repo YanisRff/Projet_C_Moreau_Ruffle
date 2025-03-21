@@ -36,24 +36,28 @@ bool mesure(absorp myAbsorp,oxy* myOxy, int* etat, float* max_acr, float* min_ac
         *max_acir = myAbsorp.acir;
         *min_acir = myAbsorp.acir;
     }
-    if(*etat == 1){
-        if(myAbsorp.acr > *max_acr){
-            *max_acr = myAbsorp.acr;
-        }
-        if(myAbsorp.acr < *min_acr){
-            *min_acr = myAbsorp.acr;
-        }
-        if(myAbsorp.acir > *max_acir){
-            *max_acir = myAbsorp.acir;
-        }
-        if(myAbsorp.acir < *min_acir){
-            *min_acir = myAbsorp.acir;
-        }
-        *periode += *time;
-        *old_acr = myAbsorp.acr;
+    if(myAbsorp.acr > *max_acr){
+        *max_acr = myAbsorp.acr;
     }
+    if(myAbsorp.acr < *min_acr){
+        *min_acr = myAbsorp.acr;
+    }
+    if(myAbsorp.acir > *max_acir){
+        *max_acir = myAbsorp.acir;
+    }
+    if(myAbsorp.acir < *min_acir){
+        *min_acir = myAbsorp.acir;
+    }
+    if(*etat == 1){
+        *periode += *time;
+    }
+    *old_acr = myAbsorp.acr;
+    
     printf("mesure en cours\n");
     printf("max_acr : %f\n", *max_acr);
     printf("min_acr : %f\n", *min_acr);
+    printf("acr : %f\n", myAbsorp.acr);
+    printf("acir : %f\n", myAbsorp.acir);
+    printf("\n");
     return false;
 }

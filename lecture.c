@@ -80,22 +80,15 @@ absorp lecture(float *time){
     }
     }
     FT_Close(ftHandle);
-    
-    char* char_to_str(char c) {
-        char* str = (char*)malloc(2 * sizeof(char));
-        if (str == NULL) {
-            fprintf(stderr, "Erreur d'allocation de mémoire\n");
-            exit(1);
-        }
-        str[0] = c;
-        str[1] = '\0';
-        return str;
+
+    int char_to_int(char c) {
+        return (c - '0');
     }
 
-    float acr = atoi(char_to_str(info[1]))*1000 + atoi(char_to_str(info[2]))*100 + atoi(char_to_str(info[3]))*10 + atoi(char_to_str(info[4])) - 2000;
-    float dcr = atoi(char_to_str(info[6]))*1000 + atoi(char_to_str(info[7]))*100 + atoi(char_to_str(info[8]))*10 + atoi(char_to_str(info[9])) - 2000;
-    float acir = atoi(char_to_str(info[11]))*1000 + atoi(char_to_str(info[12]))*100 + atoi(char_to_str(info[13]))*10 + atoi(char_to_str(info[14]))-2000;
-    float dcir = atoi(char_to_str(info[16]))*1000 + atoi(char_to_str(info[17]))*100 + atoi(char_to_str(info[18]))*10 + atoi(char_to_str(info[19])) - 2000;
+    float acr = char_to_int(info[1])*1000 + char_to_int(info[2])*100 + char_to_int(info[3])*10 + char_to_int(info[4]) - 2000;
+    float dcr = char_to_int(info[6])*1000 + char_to_int(info[7])*100 + char_to_int(info[8])*10 + char_to_int(info[9]) - 2000;
+    float acir = char_to_int(info[11])*1000 + char_to_int(info[12])*100 + char_to_int(info[13])*10 + char_to_int(info[14])-2000;
+    float dcir = char_to_int(info[16])*1000 + char_to_int(info[17])*100 + char_to_int(info[18])*10 + char_to_int(info[19]) - 2000;
     
     printf("lecture\n");
     printf("acr : %f\n", acr);
