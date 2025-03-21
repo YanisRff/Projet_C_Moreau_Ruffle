@@ -12,25 +12,26 @@ int table_de_correspondance(float rsir){
     }
 }
 
-bool mesure(absorp myAbsorp,oxy* myOxy,int* point , int* etat, float* max_acr, float* min_acr, float*max_acir, float* min_acir, float* old_acr, float* time, float* periode){
+bool mesure(absorp myAbsorp,oxy* myOxy, int* etat, float* max_acr, float* min_acr, float*max_acir, float* min_acir, float* old_acr, float* time, int* point, float* periode){
     if(*old_acr == 0.f){
         *old_acr = myAbsorp.acr;
     }
     if(*old_acr > 0.f && myAbsorp.acr < 0.f && *etat ==1){
-        float rsir = ((max_acr - min_acr)/myAbsorp.dcr)/((max_acir - min_acir)/myAbsorp.dcir);
+        float rsir = ((*max_acr - *min_acr)/myAbsorp.dcr)/((*max_acir - *min_acir)/myAbsorp.dcir);
         myOxy->spo2 = table_de_correspondance(rsir);
-        myOxy->pouls = 60/(*periode);
+        myOxy->pouls = 60000/((*point) * 2);
         printf("mesure\n");
         printf("max_acr : %f\n", *max_acr);
         printf("min_acr : %f\n", *min_acr);
         printf("SPO2 : %d\n", myOxy->spo2);
         printf("Pouls : %d\n", myOxy->pouls);
         printf("\n");
+        *etat = 0;
         return true;
     }
     if(*old_acr > 0.f && myAbsorp.acr < 0.f && *etat == 0){
         *etat = 1;
-        *periode = 0;
+        *point = 0;
         *max_acr = myAbsorp.acr;
         *min_acr = myAbsorp.acr;
         *max_acir = myAbsorp.acir;
@@ -62,7 +63,6 @@ bool mesure(absorp myAbsorp,oxy* myOxy,int* point , int* etat, float* max_acr, f
     printf("\n");
     return false;
 }
-
 
 oxy mesureTest(char* filename){
     oxy myOxy;
@@ -129,4 +129,5 @@ oxy mesureTest(char* filename){
     myOxy.spo2 = table_de_correspondance(rsir);
     myOxy.pouls = 1000*60/(2*save_point);
     return myOxy;
+
 }

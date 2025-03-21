@@ -5,10 +5,10 @@
 int verrou() {
 	int etat;
 	if( access( ".verrouData", F_OK ) != -1 ) {
-		etat = 1;
+		etat = 1; //Verrou is here
 	}
 	else {
-		etat =0;
+		etat =0; //Verrou is not here
 	}
 	return etat;
 }
