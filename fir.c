@@ -82,9 +82,10 @@ absorp fir(absorp donnes, absorp* absorp_memory, int* am_count){
 
 
 
-/*
+
 absorp firTest(char* filename){
 	absorp	myAbsorp;
+	/*
 	//absorp absorp_memory[51] = {0};
 	//int etat = 0;
 	//int am_count = 0;
@@ -112,9 +113,9 @@ absorp firTest(char* filename){
 	}
 	finFichier(file);
 	return result;
-
+ */
 }
-*/
+
 
 
 
