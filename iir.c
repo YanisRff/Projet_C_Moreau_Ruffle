@@ -21,8 +21,18 @@ absorp iir(absorp actual_absorp, absorp* old_absorp, absorp* old_iir){
 	return f_iir;
 }
 
+absorp iir_for_test(absorp actual_absorp, absorp old_absorp, absorp old_iir){
+ 
+ 	absorp f_iir;
+ 
+ 	f_iir.acr = actual_absorp.acr - old_absorp.acr + alpha*old_iir.acr;
+ 	f_iir.acir = actual_absorp.acir - old_absorp.acir + alpha*old_iir.acir;
+ 	f_iir.dcr = actual_absorp.dcr;
+ 	f_iir.dcir = actual_absorp.dcir;
+ 
+ 	return f_iir;
+ }
 
-/*
 absorp iirTest(char* filename){
 	absorp	myAbsorp;
 	absorp actual;
@@ -32,7 +42,7 @@ absorp iirTest(char* filename){
 	FILE* pf=initFichier(filename);
 	actual = lireFichier(pf,&fileState);
 	while(fileState != EOF) {
-		myAbsorp = iir(actual, old_FIR, old_IR);
+		myAbsorp = iir_for_test(actual, old_FIR, old_IR);
 		old_FIR = actual;
 		old_IR = myAbsorp;
 		actual = lireFichier(pf,&fileState);
@@ -41,4 +51,4 @@ absorp iirTest(char* filename){
 
 	return myAbsorp;
 }
-*/
+
