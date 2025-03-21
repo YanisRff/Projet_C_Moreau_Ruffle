@@ -2,7 +2,6 @@
 #include "fichiers.h"
 
 absorp iir(absorp actual_absorp, absorp* old_absorp, absorp* old_iir){
-
 	absorp f_iir;
 
 	f_iir.acr = actual_absorp.acr - old_absorp->acr + alpha*old_iir->acr;
@@ -12,12 +11,18 @@ absorp iir(absorp actual_absorp, absorp* old_absorp, absorp* old_iir){
 
 	*old_absorp = actual_absorp;
 	*old_iir = f_iir;
-
+    
+    printf("iir \n");
+    printf("acr : %f\n", f_iir.acr);
+    printf("acir : %f\n", f_iir.acir);
+    printf("dcr : %f\n", f_iir.dcr);
+    printf("dcir : %f\n", f_iir.dcir);
+    printf("\n");
 	return f_iir;
 }
 
 
-
+/*
 absorp iirTest(char* filename){
 	absorp	myAbsorp;
 	absorp actual;
@@ -36,4 +41,4 @@ absorp iirTest(char* filename){
 
 	return myAbsorp;
 }
-
+*/
