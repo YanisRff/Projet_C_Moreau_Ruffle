@@ -23,6 +23,7 @@ int main (int argc, char** argv) {
     float time = 0.;
     float periode = 0.;
     int etat = 0;
+    int point = 0;
     float max_acr;
     float min_acr;
     float max_acir;
@@ -30,54 +31,50 @@ int main (int argc, char** argv) {
     float old_acr;
     bool verif;
     int am_count = 0;
+    FT_HANDLE ftHandle;
 
     struct timeval timee;
-    struct timeval timee2;
-    struct timeval timee3;
 
-    double temps_a_virgule;
+    float temps_debut;
+    float temps_fin;
     long long int temps_passe;
     double temps_a_virgule_prems;
 
     gettimeofday(&timee, NULL);
     temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
-    temps_a_virgule_prems = (double)temps_passe / 1000000.0;
+    temps_a_virgule_prems = (float)temps_passe / 1000000.0;
 
 
     //main
+    init_lecture(&ftHandle);
     while(1){
-        myAbsorp = lecture(&time);
-
         gettimeofday(&timee, NULL);
         temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
-        temps_a_virgule = (double)temps_passe / 1000000.0  - temps_a_virgule_prems;
+        temps_fin = (float)temps_passe / 1000000.0  - temps_a_virgule_prems;
+        
+        time = temps_fin - temps_debut;
+        printf("temps : %f\n", time);
 
-        printf("Temps : %lf\n", temps_a_virgule);
+        myAbsorp = lecture(&ftHandle);
+        
+        gettimeofday(&timee, NULL);
+        temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
+        temps_debut = (float)temps_passe / 1000000.0  - temps_a_virgule_prems;
+
         myAbsorp = fir(myAbsorp, absorp_memory, &am_count);
         
-        gettimeofday(&timee, NULL);
-        temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
-        temps_a_virgule = (double)temps_passe / 1000000.0  - temps_a_virgule_prems;
-        printf("Temps2 : %lf\n", temps_a_virgule);
-
         myAbsorp = iir(myAbsorp, &old_Absorp, &old_iir);
         
-        gettimeofday(&timee, NULL);
-        temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
-        temps_a_virgule = (double)temps_passe / 1000000.0  - temps_a_virgule_prems;
-        printf("Temps3 : %lf\n", temps_a_virgule);
 
-        verif = mesure(myAbsorp, &myOxy, &etat, &max_acr, &min_acr, &max_acir, &min_acir, &old_acr, &time, &periode);
+        verif = mesure(myAbsorp, &myOxy ,&point , &etat, &max_acr, &min_acr, &max_acir, &min_acir, &old_acr, &time, &periode);
         
-        gettimeofday(&timee, NULL);
-        temps_passe = (timee.tv_sec * 1000000) + timee.tv_usec;
-        temps_a_virgule = (double)temps_passe / 1000000.0  - temps_a_virgule_prems;
-        printf("Temps4 : %lf\n", temps_a_virgule);
-
-
         if(verif){
             affichage(myOxy);
         }
+        if(am_count == 52){
+            am_count = 1;
+        }
     }
+    FT_Close(ftHandle);
     return 0;
 }

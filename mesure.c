@@ -12,7 +12,7 @@ int table_de_correspondance(float rsir){
     }
 }
 
-bool mesure(absorp myAbsorp,oxy* myOxy, int* etat, float* max_acr, float* min_acr, float*max_acir, float* min_acir, float* old_acr, float* time, float* periode){
+bool mesure(absorp myAbsorp,oxy* myOxy,int* point , int* etat, float* max_acr, float* min_acr, float*max_acir, float* min_acir, float* old_acr, float* time, float* periode){
     if(*old_acr == 0.f){
         *old_acr = myAbsorp.acr;
     }
@@ -50,6 +50,7 @@ bool mesure(absorp myAbsorp,oxy* myOxy, int* etat, float* max_acr, float* min_ac
     }
     if(*etat == 1){
         *periode += *time;
+        *point = *point + 1;
     }
     *old_acr = myAbsorp.acr;
     
