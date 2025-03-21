@@ -12,6 +12,7 @@
 #include "affichage.h"
 
 int main (int argc, char** argv) {
+    /*
     //Struct callbacks
     absorp myAbsorp;
     oxy myOxy;
@@ -76,5 +77,15 @@ int main (int argc, char** argv) {
         }
     }
     FT_Close(ftHandle);
+    */
+
+    //Tests
+    testBlocFIR();
+    firTest("../log/log1/log1.dat");
+    testBlocIIR();
+    testBlocMesure();
+    testBlocAffichage();
+
+
     return 0;
 }
