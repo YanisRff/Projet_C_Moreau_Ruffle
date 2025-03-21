@@ -188,7 +188,7 @@ void testBlocIIR(){
 	
 	float mark[4]={0,0,0,0};
 	int coeff[4]={1,1,1,1};
-	char* filename = "log1_fir.dat";
+	char* filename = "../log/log1/log1_fir.dat";
 	int ref_oxy[4] = {732,2048,1525,2000};
 	FILE* myFile_pf=initFichier(filename);
 	absorp myAbsorp = iirTest(filename);

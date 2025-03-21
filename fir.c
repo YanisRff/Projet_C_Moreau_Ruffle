@@ -79,44 +79,33 @@ absorp fir(absorp donnes, absorp* absorp_memory, int* am_count){
 }
 
 
-
-
-
-
 absorp firTest(char* filename){
-	absorp	myAbsorp;
-	/*
-	//absorp absorp_memory[51] = {0};
-	//int etat = 0;
-	//int am_count = 0;
-	FILE* file = initFichier(filename);
-	absorp result;
-	//int front;
-	myAbsorp = lireFichier(file, &etat);
-	while(etat != EOF){
-		result = fir(myAbsorp);
-		result.acr = 0;
-		result.dcr = 0;
-		result.acir = 0;
-		result.dcir = 0;
-		absorp_memory[am_count%51] = myAbsorp;
-		am_count++;
-		front = am_count%51;
-
-		for(int i = 0; i<51; i++){
-                	result.acr += absorp_memory[(50+front-i)%51].acr * FIR_TAPS[i];
-                	result.dcr = absorp_memory[50].dcr;
-                	result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
-                	result.dcir = absorp_memory[50].dcir;
-        	}
-		myAbsorp = lireFichier(file, &etat);
-	}
-	finFichier(file);
-	return result;
- */
+	absorp myAbsorp;
+    absorp absorp_memory[51] = {0};
+ 	int etat = 0;
+ 	int am_count = 0;
+ 	FILE* file = initFichier(filename);
+ 	absorp result;
+ 	int front;
+ 	myAbsorp = lireFichier(file, &etat);
+ 	while(etat != EOF){
+ 		result.acr = 0;
+ 		result.dcr = 0;
+ 		result.acir = 0;
+ 		result.dcir = 0;
+ 		absorp_memory[am_count%51] = myAbsorp;
+ 		am_count++;
+ 		front = am_count%51;
+ 
+ 		for(int i = 0; i<51; i++){
+                 	result.acr += absorp_memory[(50+front-i)%51].acr * FIR_TAPS[i];
+                 	result.dcr = absorp_memory[50].dcr;
+                 	result.acir += absorp_memory[(50+front-i)%51].acir * FIR_TAPS[i];
+                 	result.dcir = absorp_memory[50].dcir;
+         	}
+ 		myAbsorp = lireFichier(file, &etat);
+ 	}
+ 	finFichier(file);
+ 	return result;
 }
-
-
-
-
 

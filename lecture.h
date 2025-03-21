@@ -2,4 +2,6 @@
 #include "ftd2xx.h"
 #include <time.h>
 
-absorp lecture(float *time);
+void init_lecture(FT_HANDLE* ftHandle);
+int char_to_int(char c);
+absorp lecture(FT_HANDLE* ftHandle);
